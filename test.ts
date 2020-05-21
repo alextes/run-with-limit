@@ -39,8 +39,7 @@ Deno.test("concurrency of four keeps four promises running", async () => {
       assert(running <= concurrency);
       await delay(getRandomInt(30, 200));
       running--;
-    })
-  );
+    }));
 
   await Promise.all(pInput);
 });
@@ -68,11 +67,13 @@ Deno.test("getActiveCount and getPendingCount", async () => {
   assertEquals(getActiveCount(), 0);
   assertEquals(getPendingCount(), 0);
 
-  const immediatePromises = Array.from({ length: 5 }, () =>
-    runWithLimit(() => delay(500))
+  const immediatePromises = Array.from(
+    { length: 5 },
+    () => runWithLimit(() => delay(500)),
   );
-  const delayedPromises = Array.from({ length: 3 }, () =>
-    runWithLimit(() => delay(500))
+  const delayedPromises = Array.from(
+    { length: 3 },
+    () => runWithLimit(() => delay(500)),
   );
 
   assertEquals(getActiveCount(), 5);

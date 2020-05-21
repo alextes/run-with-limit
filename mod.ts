@@ -5,7 +5,7 @@ interface Runnable<A> {
 }
 
 type MakeRunWithLimit = <A>(
-  concurrency: number
+  concurrency: number,
 ) => {
   runWithLimit: (fn: () => Promise<A>) => Promise<A>;
   getActiveCount: () => number;
