@@ -26,13 +26,17 @@ const input = [
 ## API
 
 ### makeRunWithLimit(concurrency)
-Returns an object with a couple functions.
+`Number -> { runWithLimit, getActiveCount, getPendingCount }`
+Returns an object with the functions below.
 
-### runWithLimit
+#### runWithLimit
+`(() -> Promise<A>) -> Promise<A>`
 Pass a thunk to this function that returns a promise.
 
-### getActiveCount
+#### getActiveCount
+`() -> Number`
 The number of promises that are currently running.
 
-### getPendingCount
+#### getPendingCount
+`() -> Number`
 Can be used to check how many promises are still waiting to start execution.
