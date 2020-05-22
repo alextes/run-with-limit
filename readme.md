@@ -31,7 +31,9 @@ Takes a number, setting the concurrency for the promise queue. Returns a set of 
 #### runWithLimit
 `<A>(() => Promise<A>) => Promise<A>`
 
-Pass a thunk to this function that returns a promise. i.e. pass a function that when invoked, kicks off an asynchronous computation, and if you need the result, returns a promise. `runWithLimit` will resolve with said result as soon as it resolves.
+Pass a thunk to this function that returns a promise.
+
+That is, pass a function which when invoked, kicks off an asynchronous computation, and if you need its result, returns a promise. `runWithLimit` will resolve with said result while honoring the concurrency limit.
 
 #### getActiveCount
 `() => Number`
