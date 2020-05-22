@@ -25,6 +25,7 @@ const { runWithLimit } = makeRunWithLimit(1);
 
 ### makeRunWithLimit(concurrency)
 `Number => { runWithLimit, getActiveCount, getPendingCount }`
+
 Takes a number, setting the concurrency for the promise queue. Returns a set of functions to use the queue.
 
 #### runWithLimit
