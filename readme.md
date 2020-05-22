@@ -13,10 +13,10 @@ const { runWithLimit } = makeRunWithLimit(1);
 (async () => {
   // Only one promise is run at once
   const result = await Promise.all([
-  runWithLimit(() => fetchSomething("foo")),
-  runWithLimit(() => fetchSomething("bar")),
-  runWithLimit(() => doSomething()),
-]);
+    runWithLimit(() => fetchSomething("foo")),
+    runWithLimit(() => fetchSomething("bar")),
+    runWithLimit(() => doSomething()),
+  ]);
   console.log(result);
 })();
 ```

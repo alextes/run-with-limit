@@ -46,7 +46,9 @@ export function makeRunWithLimit<A>(
    * Pass a thunk to this function that returns a promise.
    */
   async function runWithLimit(fn: () => Promise<A>) {
-    return new Promise<A>((resolve, reject) => enqueue({ fn, resolve, reject }))
+    return new Promise<A>((resolve, reject) =>
+      enqueue({ fn, resolve, reject })
+    );
   }
 
   /**
@@ -60,7 +62,7 @@ export function makeRunWithLimit<A>(
    * Call to check how many promises are still waiting to start execution.
    */
   function getPendingCount() {
-    return queue.length
+    return queue.length;
   }
 
   return {
