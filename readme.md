@@ -6,7 +6,7 @@ Heavily inspired by [sindresorhus/p-limit](https://github.com/sindresorhus/p-lim
 ## Usage
 
 ```ts
-import { makeRunWithLimit } from "https://denopkg.com/alextes/p-limit";
+import { makeRunWithLimit } from "https://denopkg.com/alextes/run-with-limit";
 
 const { runWithLimit } = makeRunWithLimit(1);
 
