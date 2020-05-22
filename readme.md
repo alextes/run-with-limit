@@ -10,15 +10,13 @@ import { makeRunWithLimit } from "https://denopkg.com/alextes/p-limit";
 
 const { runWithLimit } = makeRunWithLimit(1);
 
-const input = [
+(async () => {
+  // Only one promise is run at once
+  const result = await Promise.all([
   runWithLimit(() => fetchSomething("foo")),
   runWithLimit(() => fetchSomething("bar")),
   runWithLimit(() => doSomething()),
-];
-
-(async () => {
-  // Only one promise is run at once
-  const result = await Promise.all(input);
+]);
   console.log(result);
 })();
 ```
@@ -27,16 +25,20 @@ const input = [
 
 ### makeRunWithLimit(concurrency)
 `Number -> { runWithLimit, getActiveCount, getPendingCount }`
-Returns an object with the functions below.
+
+Takes a number, setting the concurrency for the promise queue. Returns a set of functions to use the queue.
 
 #### runWithLimit
 `(() -> Promise<A>) -> Promise<A>`
-Pass a thunk to this function that returns a promise.
+
+Pass a thunk to this function that returns a promise. i.e. pass a function that when invoked, kicks off an asynchronous computation, and if you need the result, returns a promise. `runWithLimit` will resolve with said result as soon as it resolves.
 
 #### getActiveCount
 `() -> Number`
-The number of promises that are currently running.
+
+Call to get the number of promises that are currently running.
 
 #### getPendingCount
 `() -> Number`
-Can be used to check how many promises are still waiting to start execution.
+
+Call to check how many promises are still waiting to start execution.
