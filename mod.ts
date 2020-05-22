@@ -4,16 +4,12 @@ interface Runnable<A> {
   reject: (reason?: any) => void;
 }
 
-type MakeRunWithLimit = <A>(
+/**
+ * Takes a number, setting the concurrency for the promise queue. Returns a set of functions to use the queue.
+ */
+export function makeRunWithLimit<A>(
   concurrency: number,
-) => {
-  runWithLimit: (fn: () => Promise<A>) => Promise<A>;
-  getActiveCount: () => number;
-  getPendingCount: () => number;
-  getQueue: () => Array<Runnable<A>>;
-};
-
-export const makeRunWithLimit: MakeRunWithLimit = <A>(concurrency: number) => {
+) {
   if (concurrency < 1) {
     throw new Error("concurrency should be a positive number");
   }
@@ -21,7 +17,7 @@ export const makeRunWithLimit: MakeRunWithLimit = <A>(concurrency: number) => {
   const queue: Runnable<A>[] = [];
   let activeCount = 0;
 
-  const run = async <A>({ fn, resolve, reject }: Runnable<A>) => {
+  async function run<A>({ fn, resolve, reject }: Runnable<A>) {
     activeCount++;
 
     try {
@@ -36,21 +32,40 @@ export const makeRunWithLimit: MakeRunWithLimit = <A>(concurrency: number) => {
     if (typeof mNextRunnable !== "undefined") {
       run(mNextRunnable);
     }
-  };
+  }
 
-  const enqueue = (runnable: Runnable<A>) => {
+  async function enqueue(runnable: Runnable<A>) {
     if (activeCount < concurrency) {
       run(runnable);
     } else {
       queue.push(runnable);
     }
-  };
+  }
+
+  /**
+   * Pass a thunk to this function that returns a promise.
+   */
+  async function runWithLimit(fn: () => Promise<A>) {
+    return new Promise<A>((resolve, reject) => enqueue({ fn, resolve, reject }))
+  }
+
+  /**
+   * Call to get the number of promises that are currently running.
+   */
+  function getActiveCount() {
+    return activeCount;
+  }
+
+  /**
+   * Call to check how many promises are still waiting to start execution.
+   */
+  function getPendingCount() {
+    return queue.length
+  }
 
   return {
-    runWithLimit: (fn: () => Promise<A>) =>
-      new Promise<A>((resolve, reject) => enqueue({ fn, resolve, reject })),
-    getActiveCount: () => activeCount,
-    getPendingCount: () => queue.length,
-    getQueue: () => queue,
+    runWithLimit,
+    getActiveCount,
+    getPendingCount,
   };
-};
+}
