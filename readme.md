@@ -24,21 +24,20 @@ const { runWithLimit } = makeRunWithLimit(1);
 ## API
 
 ### makeRunWithLimit(concurrency)
-`Number -> { runWithLimit, getActiveCount, getPendingCount }`
-
+`Number => { runWithLimit, getActiveCount, getPendingCount }`
 Takes a number, setting the concurrency for the promise queue. Returns a set of functions to use the queue.
 
 #### runWithLimit
-`(() -> Promise<A>) -> Promise<A>`
+`<A>(() => Promise<A>) => Promise<A>`
 
 Pass a thunk to this function that returns a promise. i.e. pass a function that when invoked, kicks off an asynchronous computation, and if you need the result, returns a promise. `runWithLimit` will resolve with said result as soon as it resolves.
 
 #### getActiveCount
-`() -> Number`
+`() => Number`
 
 Call to get the number of promises that are currently running.
 
 #### getPendingCount
-`() -> Number`
+`() => Number`
 
 Call to check how many promises are still waiting to start execution.
