@@ -1,6 +1,6 @@
 # Run with limit
 
-Run multiple promise-returning & async functions with limited concurrency.
+Run promise-returning & async functions with limited concurrency.
 Heavily inspired by [sindresorhus/p-limit](https://github.com/sindresorhus/p-limit).
 
 ## Usage
