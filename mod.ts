@@ -1,6 +1,6 @@
 interface Runnable<A> {
   fn: () => Promise<A>;
-  resolve: (value?: A | PromiseLike<A> | undefined) => void;
+  resolve: (value: A | PromiseLike<A>) => void;
   reject: (reason?: any) => void;
 }
 
