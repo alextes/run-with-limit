@@ -1,6 +1,6 @@
 import {
-  assertEquals,
   assert,
+  assertEquals,
   assertThrowsAsync,
 } from "https://deno.land/std@0.90.0/testing/asserts.ts";
 import { makeRunWithLimit } from "./mod.ts";
