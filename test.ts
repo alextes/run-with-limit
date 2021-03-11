@@ -44,10 +44,10 @@ Deno.test("concurrency of four keeps four promises running", async () => {
   await Promise.all(pInput);
 });
 
-Deno.test("rejects on error", async () => {
+Deno.test("rejects on error", () => {
   const { runWithLimit } = makeRunWithLimit<void>(1);
   assertThrowsAsync(() =>
-    runWithLimit(async () => {
+    runWithLimit(() => {
       throw new Error("💣");
     })
   );

@@ -34,7 +34,7 @@ export function makeRunWithLimit<A>(
     }
   }
 
-  async function enqueue(runnable: Runnable<A>) {
+  function enqueue(runnable: Runnable<A>) {
     if (activeCount < concurrency) {
       run(runnable);
     } else {
@@ -45,7 +45,7 @@ export function makeRunWithLimit<A>(
   /**
    * Pass a thunk to this function that returns a promise.
    */
-  async function runWithLimit(fn: () => Promise<A>) {
+  function runWithLimit(fn: () => Promise<A>) {
     return new Promise<A>((resolve, reject) =>
       enqueue({ fn, resolve, reject })
     );
