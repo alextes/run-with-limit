@@ -1,6 +1,8 @@
 interface Runnable<A> {
   fn: () => Promise<A>;
   resolve: (value: A | PromiseLike<A>) => void;
+  // We mimic the promise interface which we do not control.
+  // deno-lint-ignore no-explicit-any
   reject: (reason?: any) => void;
 }
 
