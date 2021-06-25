@@ -2,7 +2,7 @@ import {
   assert,
   assertEquals,
   assertThrowsAsync,
-} from "https://deno.land/std@0.90.0/testing/asserts.ts";
+} from "https://deno.land/std@0.99.0/testing/asserts.ts";
 import { makeRunWithLimit } from "./mod.ts";
 
 function getRandomInt(min: number, max: number) {
